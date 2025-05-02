@@ -1,0 +1,479 @@
+<?php
+// Start the session to manage the cart
+session_start();
+
+// Initialize the cart if it doesn't exist
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Simulating product data with provided image URLs (prices in euros)
+$products = [
+    'drop001' => [
+        'name' => 'Drop 001 - Camiseta de Lasaña',
+        'price' => 23.50,
+        'image' => 'https://media.discordapp.net/attachments/1367183138912206959/1367836184125902868/Flux_Dev_Create_a_highquality_photorealistic_image_of_a_white__2.png?ex=68160837&is=6814b6b7&hm=b2e7fa90c49469319c8e1ad7a9a5f017e23319d081d81a48c6f2197016600493&=&format=webp&quality=lossless&width=968&height=968',
+        'description' => 'Una camiseta blanca que presenta un diseño vibrante de lasaña con el texto "salva13a" impreso debajo.'
+    ],
+    'drop002' => [
+        'name' => 'Drop 002 - Gorra de Lasaña',
+        'price' => 18.80,
+        'image' => 'https://media.discordapp.net/attachments/1367183138912206959/1367842330933202965/image.png?ex=68160df0&is=6814bc70&hm=39e6fd5ca83eb671ec514d8085775fa19b7b2072be520fa6885c474676c7669c&=&format=webp&quality=lossless',
+        'description' => 'Una gorra de béisbol cubierta con un patrón juguetón de lasaña y el texto "salva13a" impreso en la parte frontal.'
+    ]
+];
+
+// Handle cart actions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Add to cart
+    if (isset($_POST['add_to_cart']) && isset($_POST['product_id'])) {
+        $product_id = $_POST['product_id'];
+        if (isset($products[$product_id])) {
+            if (isset($_SESSION['cart'][$product_id])) {
+                $_SESSION['cart'][$product_id]['quantity']++;
+            } else {
+                $_SESSION['cart'][$product_id] = [
+                    'name' => $products[$product_id]['name'],
+                    'price' => $products[$product_id]['price'],
+                    'quantity' => 1,
+                    'image' => $products[$product_id]['image']
+                ];
+            }
+            $message = "¡{$products[$product_id]['name']} ha sido agregado a tu carrito!";
+        }
+    }
+
+    // Remove from cart
+    if (isset($_POST['remove_from_cart']) && isset($_POST['product_id'])) {
+        $product_id = $_POST['product_id'];
+        if (isset($_SESSION['cart'][$product_id])) {
+            unset($_SESSION['cart'][$product_id]);
+            $message = "Producto eliminado del carrito.";
+        }
+    }
+
+    // Simulate payment
+    if (isset($_POST['pay'])) {
+        $message = "¡Pago realizado con éxito! Gracias por tu compra.";
+        $_SESSION['cart'] = []; // Clear the cart after "payment"
+    }
+}
+
+// Calculate cart total
+$cart_total = 0;
+foreach ($_SESSION['cart'] as $item) {
+    $cart_total += $item['price'] * $item['quantity'];
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Salva13a</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #D4AF37;
+            margin: 40px 0;
+            font-size: 3.5em;
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .bio-section {
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            border: 2px solid #FF6347;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .bio-section .profile-container {
+            position: relative;
+            display: inline-block;
+        }
+        .bio-section img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 5px solid #D4AF37;
+            transition: transform 0.3s ease;
+        }
+        .bio-section img:hover {
+            transform: scale(1.1);
+        }
+        .bio-section .speech-bubble {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f5f5f5;
+            border: 2px solid #D4AF37;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 1em;
+            color: #1a1a1a;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            animation: bounceIn 0.5s ease-in-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: translateX(-50%) scale(0); opacity: 0; }
+            60% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+        .bio-section .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #D4AF37;
+        }
+        .bio-section .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            border-top: 9px solid #f5f5f5;
+        }
+        .bio-section h2 {
+            color: #D4AF37;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        .bio-section p {
+            color: #cccccc;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        .product-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .product {
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            padding: 20px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 2s ease-in-out;
+            border: 2px solid #FF6347;
+        }
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .product img:hover {
+            transform: scale(1.05);
+        }
+        .product h3 {
+            margin: 15px 0;
+            color: #D4AF37;
+            font-size: 1.8em;
+            font-family: 'Playfair Display', serif;
+        }
+        .product p {
+            color: #cccccc;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .product .price {
+            font-size: 1.6em;
+            color: #FF6347;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .product button, .cart-button, .checkout-button {
+            background-color: #D4AF37;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: 'Playfair Display', serif;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .product button:hover, .cart-button:hover, .checkout-button:hover {
+            background-color: #b8972f;
+            transform: scale(1.05);
+        }
+        .cart-button {
+            background-color: #FF6347;
+            color: #f5f5f5;
+            display: block;
+            margin: 30px auto;
+            width: fit-content;
+            padding: 15px 40px;
+            font-size: 1.2em;
+        }
+        .cart-button:hover {
+            background-color: #e55b3c;
+        }
+        .cart-section, .checkout-section {
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid #FF6347;
+            animation: slideIn 1s ease-in-out;
+        }
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .cart-section h2, .checkout-section h2 {
+            color: #D4AF37;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #D4AF37;
+        }
+        .cart-item img {
+            width: 60px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .cart-item p {
+            flex: 1;
+            margin: 0;
+            color: #cccccc;
+        }
+        .cart-item form {
+            margin: 0;
+        }
+        .cart-item button {
+            background-color: #FF6347;
+            color: #f5f5f5;
+            padding: 8px 15px;
+            width: auto;
+        }
+        .cart-item button:hover {
+            background-color: #e55b3c;
+        }
+        .cart-total {
+            text-align: right;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #FF6347;
+        }
+        .checkout-section label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            color: #D4AF37;
+            font-family: 'Playfair Display', serif;
+        }
+        .checkout-section input, .checkout-section select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #D4AF37;
+            border-radius: 5px;
+            background-color: #3c3c3c;
+            color: #f5f5f5;
+            font-family: 'Lora', serif;
+        }
+        .payment-methods {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .payment-methods img {
+            width: 50px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        .payment-methods img:hover {
+            transform: scale(1.1);
+        }
+        .message {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.4em;
+            color: #D4AF37;
+            animation: fadeIn 1s ease-in-out;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #D4AF37;
+            font-size: 1em;
+            font-family: 'Playfair Display', serif;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tienda Salva13a</h1>
+
+    <!-- Sección de Biografía -->
+    <div class="bio-section">
+        <div class="profile-container">
+            <img src="https://media.discordapp.net/attachments/1367183138912206959/1367844484062253167/photo_2025-05-02_09-45-23.jpg?ex=68160ff2&is=6814be72&hm=7dc35934c4469ba267bd7351c229dc4e345ef1bda9429f8ef5d554f976130e46&=&format=webp&width=646&height=968" alt="Foto de perfil de salva13a">
+            <div class="speech-bubble">primo aceptas paysa?</div>
+        </div>
+        <h2>Acerca de salva13a</h2>
+        <p>¡Hola! Soy salva13a, el apasionado de las lasañas detrás de esta exclusiva tienda. Mi obsesión por las lasañas –esas capas perfectas de pasta, salsa de tomate intensa, queso derretido y hierbas frescas– me ha llevado a crear piezas únicas que celebran este plato icónico. Cuando no estoy diseñando, estoy perfeccionando recetas o compartiendo mi amor por la cocina italiana con el mundo. ¡Únete a mí y descubre la elegancia de las lasañas a través de mi colección!</p>
+    </div>
+
+    <!-- Mensaje de confirmación -->
+    <?php if (isset($message)): ?>
+        <p class="message"><?php echo htmlspecialchars($message); ?></p>
+    <?php endif; ?>
+
+    <!-- Mostrar el carrito si está en la página de carrito -->
+    <?php if (isset($_GET['action']) && $_GET['action'] === 'view_cart'): ?>
+        <div class="cart-section">
+            <h2>Tu Carrito</h2>
+            <?php if (empty($_SESSION['cart'])): ?>
+                <p>Tu carrito está vacío.</p>
+            <?php else: ?>
+                <?php foreach ($_SESSION['cart'] as $id => $item): ?>
+                    <div class="cart-item">
+                        <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
+                        <p><?php echo htmlspecialchars($item['name']); ?> - €<?php echo number_format($item['price'], 2); ?> x <?php echo $item['quantity']; ?></p>
+                        <form method="POST" action="">
+                            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($id); ?>">
+                            <button type="submit" name="remove_from_cart">Eliminar</button>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
+                <div class="cart-total">
+                    Total: €<?php echo number_format($cart_total, 2); ?>
+                </div>
+                <a href="?action=checkout" class="checkout-button">Proceder al Pago</a>
+            <?php endif; ?>
+        </div>
+    <?php elseif (isset($_GET['action']) && $_GET['action'] === 'checkout'): ?>
+        <!-- Formulario de pago -->
+        <div class="checkout-section">
+            <h2>Finalizar Compra</h2>
+            <form method="POST" action="">
+                <!-- Dirección de Envío -->
+                <h3 style="color: #D4AF37; font-family: 'Playfair Display', serif;">Dirección de Envío</h3>
+                <label for="full_name">Nombre Completo</label>
+                <input type="text" id="full_name" name="full_name" placeholder="Nombre Apellido" required>
+                
+                <label for="address">Dirección</label>
+                <input type="text" id="address" name="address" placeholder="Calle y Número" required>
+                
+                <label for="city">Ciudad</label>
+                <input type="text" id="city" name="city" placeholder="Ciudad" required>
+                
+                <label for="postal_code">Código Postal</label>
+                <input type="text" id="postal_code" name="postal_code" placeholder="Código Postal" required>
+                
+                <label for="country">País</label>
+                <input type="text" id="country" name="country" placeholder="País" required>
+
+                <!-- Método de Pago -->
+                <h3 style="color: #D4AF37; font-family: 'Playfair Display', serif;">Método de Pago</h3>
+                <label for="payment_method">Seleccionar Método de Pago</label>
+                <select id="payment_method" name="payment_method" required>
+                    <option value="credit_card">Tarjeta de Crédito</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="litecoin">Litecoin (LTC)</option>
+                </select>
+                <div class="payment-methods">
+                    <img src="https://media.discordapp.net/attachments/1363569523461984588/1367850734342766683/6963703.png?ex=681615c4&is=6814c444&hm=f93a370fcc82186f5302ed9ce8654d9047e1f3f72d7f53b377970b0c8fb08c79&=&format=webp&quality=lossless" alt="Credit Card Logo">
+                    <img src="https://media.discordapp.net/attachments/1363569523461984588/1367851035367964783/PayPal_Logo_Icon_2014.png?ex=6816160c&is=6814c48c&hm=5632f81b19b56068ff5bbfbbfe86b1d4ef0c167543d2e366274dfa02a154aee4&=&format=webp&quality=lossless" alt="PayPal Logo">
+                    <img src="https://media.discordapp.net/attachments/1363569523461984588/1367850980686692493/image-removebg-preview.png?ex=681615ff&is=6814c47f&hm=d7b0f59cc4276e00d9f2ae93728848f838af30f45a6409baf0aa2df4b05de045&=&format=webp&quality=lossless" alt="Litecoin Logo">
+                </div>
+
+                <!-- Detalles de Pago -->
+                <div id="payment_details">
+                    <label for="card_number">Número de Tarjeta</label>
+                    <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" required>
+                    
+                    <label for="card_name">Nombre en la Tarjeta</label>
+                    <input type="text" id="card_name" name="card_name" placeholder="Nombre Apellido" required>
+                    
+                    <label for="expiry_date">Fecha de Expiración (MM/AA)</label>
+                    <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/AA" required>
+                    
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="123" required>
+                </div>
+                
+                <p>Total a pagar: €<?php echo number_format($cart_total, 2); ?></p>
+                <button type="submit" name="pay" class="checkout-button">Pagar</button>
+            </form>
+        </div>
+    <?php else: ?>
+        <!-- Sección de Productos -->
+        <div class="product-container">
+            <?php foreach ($products as $id => $product): ?>
+                <div class="product">
+                    <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                    <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                    <p><?php echo htmlspecialchars($product['description']); ?></p>
+                    <div class="price">€<?php echo number_format($product['price'], 2); ?></div>
+                    <form method="POST" action="">
+                        <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($id); ?>">
+                        <button type="submit" name="add_to_cart">Agregar al Carrito</button>
+                    </form>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <a href="?action=view_cart" class="cart-button">Ver Carrito (<?php echo count($_SESSION['cart']); ?>)</a>
+    <?php endif; ?>
+
+    <footer>
+        © 2025 Tienda Salva13a. Todos los derechos reservados.
+    </footer>
+</body>
+</html>
