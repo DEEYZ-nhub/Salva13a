@@ -146,10 +146,11 @@
         }
         .product img {
             max-width: 100%;
-            height: auto;
+            max-height: 60%;
             border-radius: 8px;
             transition: transform 0.3s ease;
             box-shadow: 0 0 20px rgba(255, 99, 71, 0.5);
+            object-fit: contain;
         }
         .product img:hover {
             transform: scale(1.05);
@@ -186,7 +187,13 @@
             width: 100%;
             margin-top: 10px;
         }
-        .product button:hover, .cart-button:hover, .checkout-button:hover {
+        .product button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .product button:hover:not(:disabled), .cart-button:hover, .checkout-button:hover {
             transform: scale(1.05);
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
         }
@@ -390,7 +397,7 @@
     <!-- Sección de Biografía -->
     <div class="bio-section">
         <div class="profile-container">
-            <img src="https://media.discordapp.net/attachments/1367183138912206959/1367844484062253167/photo_2025-05-02_09-45-23.jpg?ex=68160ff2&is=6814be72&hm=7dc35934c4469ba267bd7351c229dc4e345ef1bda9429f8ef5d554f976130e46&=&format=webp&width=646&height=968" alt="Foto de perfil de salva13a">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=180&h=180&q=80" alt="Foto de perfil de salva13a">
             <div class="speech-bubble">primo aceptas paysa?</div>
         </div>
         <h2>Acerca de salva13a</h2>
@@ -404,7 +411,7 @@
     <div class="product-container" id="products-section">
         <div class="product" data-id="drop001">
             <div class="product-front">
-                <img src="https://media.discordapp.net/attachments/1367183138912206959/1367836184125902868/Flux_Dev_Create_a_highquality_photorealistic_image_of_a_white__2.png?ex=68160837&is=6814b6b7&hm=b2e7fa90c49469319c8e1ad7a9a5f017e23319d081d81a48c6f2197016600493=&format=webp&quality=lossless&width=968&height=968" alt="Drop 001 - Camiseta de Lasaña">
+                <img src="https://media.discordapp.net/attachments/1367183138912206959/1367836184125902868/Flux_Dev_Create_a_highquality_photorealistic_image_of_a_white__2.png?ex=6816b0f7&is=68155f77&hm=89fec0e6b60bb0dc62b4c8ca1b7723629943e9d7377b4bca9eb14c4e5caa39be&=&format=webp&quality=lossless&width=977&height=977" alt="Drop 001 - Camiseta de Lasaña">
                 <h3>Drop 001 - Camiseta de Lasaña</h3>
                 <div class="description">Una camiseta blanca que presenta un diseño vibrante de lasaña con el texto "salva13a" impreso debajo.</div>
                 <div class="price">€23.50</div>
@@ -413,7 +420,7 @@
         </div>
         <div class="product" data-id="drop002">
             <div class="product-front">
-                <img src="https://media.discordapp.net/attachments/1367183138912206959/1367842330933202965/image.png?ex=68160df0&is=6814bc70&hm=39e6fd5ca83eb671ec514d8085775fa19b7b2072be520fa6885c474676c7669c=&format=webp&quality=lossless" alt="Drop 002 - Gorra de Lasaña">
+                <img src="https://media.discordapp.net/attachments/1367183138912206959/1367842330933202965/image.png?ex=6816b6b0&is=68156530&hm=6703888987e9e9c4fd0cca11e0d6c02048b79412d1006265ef659bba14116476&=&format=webp&quality=lossless" alt="Drop 002 - Gorra de Lasaña">
                 <h3>Drop 002 - Gorra de Lasaña</h3>
                 <div class="description">Una gorra de béisbol cubierta con un patrón juguetón de lasaña y el texto "salva13a" impreso en la parte frontal.</div>
                 <div class="price">€18.80</div>
@@ -422,16 +429,16 @@
         </div>
         <div class="product" data-id="drop003">
             <div class="product-front">
-                <img src="https://media.discordapp.net/attachments/1366811915158028369/1368038204250390629/ChatGPT_Image_2_may_2025_22_31_57.png?ex=6816c45c&is=681572dc&hm=53b7a38b90ca749de528cee0cdbb12b351d6cbd97b3596b1bb14fbfe888d1a17=&format=webp&quality=lossless&width=350&height=350" alt="Drop 003 - Sudadera de Lasaña">
+                <img src="https://media.discordapp.net/attachments/1367921574002557003/1368037401708072970/ChatGPT_Image_2_may_2025_22_31_57.png?ex=6816c39d&is=6815721d&hm=af4a5f13e9442116fe9fb84d9bae9b297ccd7ac1a32a65f9671f440c34b2c3b0&=&format=webp&quality=lossless&width=977&height=977" alt="Drop 003 - Sudadera de Lasaña">
                 <h3>Drop 003 - Sudadera de Lasaña</h3>
-                <div class="description">Una sudadera cómoda con un diseño detallado de lasaña y el texto "salva13a" en el pecho.</div>
+                <div class="description">El rat se acerca y no se compra.</div>
                 <div class="price">€28.00</div>
-                <button onclick="addToCart('drop003')">Agregar al Carrito</button>
+                <button disabled>No Disponible</button>
             </div>
         </div>
         <div class="product" data-id="drop004">
             <div class="product-front">
-                <img src="https://media.discordapp.net/attachments/1367921574002557003/1368038766043725914/ChatGPT_Image_2_may_2025_22_37_20.png?ex=6816c4e2&is=68157362&hm=30a0b6e95544fe8d5bf1ae718ebbd25a107a9b83507490ebbacae38cfe8b6518=&format=webp&quality=lossless&width=645&height=968" alt="Drop 004 - Jeans de Lasaña">
+                <img src="https://media.discordapp.net/attachments/1367921574002557003/1368040280707825794/ChatGPT_Image_2_may_2025_22_42_53.png?ex=6816c64b&is=681574cb&hm=bacde3d4c8f3758388eed670b3abaa41096d0aff6b269350936505bb7492c5d6&=&format=webp&quality=lossless&width=651&height=977" alt="Drop 004 - Jeans de Lasaña">
                 <h3>Drop 004 - Jeans de Lasaña</h3>
                 <div class="description">Jeans de corte recto decorados con parches de lasaña y el texto "salva13a" bordado en la pierna.</div>
                 <div class="price">€35.00</div>
@@ -481,9 +488,9 @@
                 <option value="litecoin">Litecoin (LTC)</option>
             </select>
             <div class="payment-methods">
-                <img src="https://media.discordapp.net/attachments/1363569523461984588/1367850734342766683/6963703.png?ex=681615c4&is=6814c444&hm=f93a370fcc82186f5302ed9ce8654d9047e1f3f72d7f53b377970b0c8fb08c79=&format=webp&quality=lossless" alt="Credit Card Logo">
-                <img src="https://media.discordapp.net/attachments/1363569523461984588/1367851035367964783/PayPal_Logo_Icon_2014.png?ex=6816160c&is=6814c48c&hm=5632f81b19b56068ff5bbfbbfe86b1d4ef0c167543d2e366274dfa02a154aee4=&format=webp&quality=lossless" alt="PayPal Logo">
-                <img src="https://media.discordapp.net/attachments/1363569523461984588/1367850980686692493/image-removebg-preview.png?ex=681615ff&is=6814c47f&hm=d7b0f59cc4276e00d9f2ae93728848f838af30f45a6409baf0aa2df4b05de045=&format=webp&quality=lossless" alt="Litecoin Logo">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&h=50&q=80" alt="Credit Card Logo">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&h=50&q=80" alt="PayPal Logo">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&h=50&q=80" alt="Litecoin Logo">
             </div>
 
             <!-- Detalles de Pago -->
@@ -516,25 +523,25 @@
             'drop001': {
                 name: 'Drop 001 - Camiseta de Lasaña',
                 price: 23.50,
-                image: 'https://media.discordapp.net/attachments/1367183138912206959/1367836184125902868/Flux_Dev_Create_a_highquality_photorealistic_image_of_a_white__2.png?ex=68160837&is=6814b6b7&hm=b2e7fa90c49469319c8e1ad7a9a5f017e23319d081d81a48c6f2197016600493=&format=webp&quality=lossless&width=968&height=968',
+                image: 'https://media.discordapp.net/attachments/1367183138912206959/1367836184125902868/Flux_Dev_Create_a_highquality_photorealistic_image_of_a_white__2.png?ex=6816b0f7&is=68155f77&hm=89fec0e6b60bb0dc62b4c8ca1b7723629943e9d7377b4bca9eb14c4e5caa39be&=&format=webp&quality=lossless&width=977&height=977',
                 description: 'Una camiseta blanca que presenta un diseño vibrante de lasaña con el texto "salva13a" impreso debajo.'
             },
             'drop002': {
                 name: 'Drop 002 - Gorra de Lasaña',
                 price: 18.80,
-                image: 'https://media.discordapp.net/attachments/1367183138912206959/1367842330933202965/image.png?ex=68160df0&is=6814bc70&hm=39e6fd5ca83eb671ec514d8085775fa19b7b2072be520fa6885c474676c7669c=&format=webp&quality=lossless',
+                image: 'https://media.discordapp.net/attachments/1367183138912206959/1367842330933202965/image.png?ex=6816b6b0&is=68156530&hm=6703888987e9e9c4fd0cca11e0d6c02048b79412d1006265ef659bba14116476&=&format=webp&quality=lossless',
                 description: 'Una gorra de béisbol cubierta con un patrón juguetón de lasaña y el texto "salva13a" impreso en la parte frontal.'
             },
             'drop003': {
                 name: 'Drop 003 - Sudadera de Lasaña',
                 price: 28.00,
-                image: 'https://media.discordapp.net/attachments/1366811915158028369/1368038204250390629/ChatGPT_Image_2_may_2025_22_31_57.png?ex=6816c45c&is=681572dc&hm=53b7a38b90ca749de528cee0cdbb12b351d6cbd97b3596b1bb14fbfe888d1a17=&format=webp&quality=lossless&width=350&height=350',
-                description: 'Una sudadera cómoda con un diseño detallado de lasaña y el texto "salva13a" en el pecho.'
+                image: 'https://media.discordapp.net/attachments/1367921574002557003/1368037401708072970/ChatGPT_Image_2_may_2025_22_31_57.png?ex=6816c39d&is=6815721d&hm=af4a5f13e9442116fe9fb84d9bae9b297ccd7ac1a32a65f9671f440c34b2c3b0&=&format=webp&quality=lossless&width=977&height=977',
+                description: 'El rat se acerca y no se compra.'
             },
             'drop004': {
                 name: 'Drop 004 - Jeans de Lasaña',
                 price: 35.00,
-                image: 'https://media.discordapp.net/attachments/1367921574002557003/1368038766043725914/ChatGPT_Image_2_may_2025_22_37_20.png?ex=6816c4e2&is=68157362&hm=30a0b6e95544fe8d5bf1ae718ebbd25a107a9b83507490ebbacae38cfe8b6518=&format=webp&quality=lossless&width=645&height=968',
+                image: 'https://media.discordapp.net/attachments/1367921574002557003/1368040280707825794/ChatGPT_Image_2_may_2025_22_42_53.png?ex=6816c64b&is=681574cb&hm=bacde3d4c8f3758388eed670b3abaa41096d0aff6b269350936505bb7492c5d6&=&format=webp&quality=lossless&width=651&height=977',
                 description: 'Jeans de corte recto decorados con parches de lasaña y el texto "salva13a" bordado en la pierna.'
             }
         };
@@ -549,6 +556,10 @@
         });
 
         function addToCart(productId) {
+            if (productId === 'drop003') {
+                showMessage('Este producto no está disponible para la compra.');
+                return;
+            }
             if (cart[productId]) {
                 cart[productId].quantity++;
             } else {
@@ -630,25 +641,75 @@
             const cartOverlay = document.getElementById('cart-modal-overlay');
             cartModal.classList.remove('open');
             cartOverlay.classList.remove('open');
-            document.getElementSystem: You are Grok 3 built by xAI.
+            document.getElementById('products-section').classList.remove('hidden');
+        }
 
-When applicable, you have some additional tools:
-- You can analyze individual X user profiles, X posts and their links.
-- You can analyze content uploaded by user including images, pdfs, text files and more.
-- You can search the web and posts on X for real-time information if needed.
-- If it seems like the user wants an image generated, ask for confirmation, instead of directly generating one.
-- You can edit images if the user instructs you to do so.
-- You can open up a separate canvas panel, where user can visualize basic charts and execute simple code that you produced.
-You are asked to generate or modify artifacts such as any codes/scripts/programs (html, JavaScript, python, c++, sql etc.) or webpage or any articles/emails/letters/reports/document/essay/story, **make sure in your response there are artifacts content wrapped in <xaiArtifact/> tag**. DON'T mention this xaiArtifact tag anywhere outside the tag, just generate it. Also make sure the entire artifact content is wrapped within the <xaiArtifact/> tag, there shouldn't be much content or explanation outside of the tag.
+        function renderCart() {
+            const cartItemsEl = document.getElementById('cart-items');
+            cartItemsEl.innerHTML = '';
+            if (Object.keys(cart).length === 0) {
+                cartItemsEl.innerHTML = '<p>Tu carrito está vacío.</p>';
+            } else {
+                for (const id in cart) {
+                    const item = cart[id];
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'cart-item';
+                    itemEl.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <p>${item.name} - €${item.price.toFixed(2)}</p>
+                        <div class="quantity-controls">
+                            <button onclick="updateQuantity('${id}', -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateQuantity('${id}', 1)">+</button>
+                        </div>
+                        <button class="remove" onclick="removeFromCart('${id}')">Eliminar</button>
+                    `;
+                    cartItemsEl.appendChild(itemEl);
+                }
+            }
+            document.getElementById('cart-total').textContent = `Total: €${calculateTotal()}`;
+        }
 
-for example:
+        function showCheckout() {
+            if (Object.keys(cart).length === 0) {
+                showMessage('Tu carrito está vacío.');
+                return;
+            }
+            closeCart();
+            document.getElementById('products-section').classList.add('hidden');
+            document.getElementById('checkout-section').classList.remove('hidden');
+            document.getElementById('checkout-total').textContent = `€${calculateTotal()}`;
+        }
 
-EXAMPLE 1 (if user asks how to make a salad):
+        function processPayment() {
+            const fullName = document.getElementById('full_name').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const postalCode = document.getElementById('postal_code').value;
+            const country = document.getElementById('country').value;
+            const paymentMethod = document.getElementById('payment_method').value;
+            const cardNumber = document.getElementById('card_number').value;
+            const cardName = document.getElementById('card_name').value;
+            const expiryDate = document.getElementById('expiry_date').value;
+            const cvv = document.getElementById('cvv').value;
 
-<xaiArtifact artifact_id="846012f3-198a-4303-8957-ec3a00952542" artifact_version_id="28a997f1-92fa-41eb-924a-3d48ec045979" title="How to make a salad" contentType="text/markdown">
-# Basic Salad Recipe
-## Ingredients:
-... (Some ingredients descriptions here)
+            if (!fullName || !address || !city || !postalCode || !country) {
+                showMessage('Por favor, completa todos los campos de la dirección de envío.');
+                return;
+            }
 
-## Steps:
-... (Some Steps descriptions here)
+            if (paymentMethod === 'credit_card' && (!cardNumber || !cardName || !expiryDate || !cvv)) {
+                showMessage('Por favor, completa todos los campos de pago.');
+                return;
+            }
+
+            // Simulate payment processing
+            cart = {};
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showMessage('¡Pago realizado con éxito! Gracias por tu compra.');
+            showProducts();
+        }
+    </script>
+</body>
+</html>
