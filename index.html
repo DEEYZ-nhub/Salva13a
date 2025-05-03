@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda salva13a</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://media.discordapp.net/attachments/1367183138912206959/1367842330933202965/image.png?ex=68160df0&is=6814bc70&hm=39e6fd5ca83eb671ec514d8085775fa19b7b2072be520fa6885c474676c7669c&=&format=webp&quality=lossless" rel="stylesheet">
     <style>
         body {
             font-family: 'Lora', serif;
@@ -427,16 +427,15 @@
                 <button onclick="addToCart('drop002')">Agregar al Carrito</button>
             </div>
         </div>
-        <div class="product" data-id="drop003">
+        <div class="product" data-id="rat">
             <div class="product-front">
-                <img src="https://media.discordapp.net/attachments/1367921574002557003/1368037401708072970/ChatGPT_Image_2_may_2025_22_31_57.png?ex=6816c39d&is=6815721d&hm=af4a5f13e9442116fe9fb84d9bae9b297ccd7ac1a32a65f9671f440c34b2c3b0&=&format=webp&quality=lossless&width=977&height=977" alt="Drop 003 - Sudadera de Lasaña">
-                <h3>Drop 003 - Sudadera de Lasaña</h3>
-                <div class="description">El rat se acerca y no se compra.</div>
-                <div class="price">€28.00</div>
-                <button disabled>No Disponible</button>
+                <img src="https://media.discordapp.net/attachments/1367921574002557003/1368037401708072970/ChatGPT_Image_2_may_2025_22_31_57.png?ex=6816c39d&is=6815721d&hm=af4a5f13e9442116fe9fb84d9bae9b297ccd7ac1a32a65f9671f440c34b2c3b0&=&format=webp&quality=lossless&width=977&height=977" alt="El rat se acerca">
+                <h3>El rat se acerca</h3>
+                <div class="price"></div>
+                <button disabled>Próximamente</button>
             </div>
         </div>
-        <div class="product" data-id="drop004">
+        <div class="product" data-id="drop004" style="margin-top: 50px;">
             <div class="product-front">
                 <img src="https://media.discordapp.net/attachments/1367921574002557003/1368040280707825794/ChatGPT_Image_2_may_2025_22_42_53.png?ex=6816c64b&is=681574cb&hm=bacde3d4c8f3758388eed670b3abaa41096d0aff6b269350936505bb7492c5d6&=&format=webp&quality=lossless&width=651&height=977" alt="Drop 004 - Jeans de Lasaña">
                 <h3>Drop 004 - Jeans de Lasaña</h3>
@@ -532,11 +531,9 @@
                 image: 'https://media.discordapp.net/attachments/1367183138912206959/1367842330933202965/image.png?ex=6816b6b0&is=68156530&hm=6703888987e9e9c4fd0cca11e0d6c02048b79412d1006265ef659bba14116476&=&format=webp&quality=lossless',
                 description: 'Una gorra de béisbol cubierta con un patrón juguetón de lasaña y el texto "salva13a" impreso en la parte frontal.'
             },
-            'drop003': {
-                name: 'Drop 003 - Sudadera de Lasaña',
-                price: 28.00,
-                image: 'https://media.discordapp.net/attachments/1367921574002557003/1368037401708072970/ChatGPT_Image_2_may_2025_22_31_57.png?ex=6816c39d&is=6815721d&hm=af4a5f13e9442116fe9fb84d9bae9b297ccd7ac1a32a65f9671f440c34b2c3b0&=&format=webp&quality=lossless&width=977&height=977',
-                description: 'El rat se acerca y no se compra.'
+            'rat': {
+                name: 'El rat se acerca',
+                image: 'https://media.discordapp.net/attachments/1367921574002557003/1368037401708072970/ChatGPT_Image_2_may_2025_22_31_57.png?ex=6816c39d&is=6815721d&hm=af4a5f13e9442116fe9fb84d9bae9b297ccd7ac1a32a65f9671f440c34b2c3b0&=&format=webp&quality=lossless&width=977&height=977'
             },
             'drop004': {
                 name: 'Drop 004 - Jeans de Lasaña',
@@ -556,8 +553,8 @@
         });
 
         function addToCart(productId) {
-            if (productId === 'drop003') {
-                showMessage('Este producto no está disponible para la compra.');
+            if (productId === 'rat') {
+                showMessage('Este producto está próximamente disponible.');
                 return;
             }
             if (cart[productId]) {
